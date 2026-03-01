@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohit Bullion | Live Gold & Silver Rates</title>
+    <style>
+        /* --- CSS STYLES --- */
+        :root {
+            --primary-gold: #D4AF37;
+            --dark-bg: #1a1a1a;
+            --light-bg: #f4f4f4;
+            --text-color: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--dark-bg);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--primary-gold);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+        }
+
+        /* Live Rate Section */
+        .rate-container {
+            max-width: 1000px;
+            margin: -50px auto 50px; /* Overlap hero */
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--dark-bg);
+        }
+
+        .rate-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .rate-card {
+            border: 1px solid #eee;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+            transition: transform 0.3s;
+        }
+
+        .rate-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-gold);
+        }
+
+        .metal-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-gold);
+        }
+
+        .change {
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .up { color: green; }
+        .down { color: red; }
+
+        .update-time {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 50px 5%;
+            background-color: #fff;
+            text-align: center;
+        }
+
+        .contact button {
+            background-color: var(--primary-gold);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .rate-container { margin: 0; border-radius: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">Mohit Bullion</div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#rates">Live Rates</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h1>Real-Time Gold & Silver Rates</h1>
+        <p>Trusted by thousands for transparent pricing</p>
+    </section>
+
+    <!-- LIVE RATES -->
+    <section id="rates" class="rate-container">
+        <h2 class="section-title">Today's Live Rates (Per 10g)</h2>
+        
+        <div class="rate-grid">
+            <!-- Gold 24K -->
+            <div class="rate-card">
+                <div class="metal-name">Gold 24K (999)</div>
+                <div class="price" id="price-24k">Loading...</div>
+                <div class="change" id="change-24k">--</div>
+            </div>
+
+            <!-- Gold 22K -->
+            <div class="rate-card">
+                <div class="metal-name">Gold 22K (916)</div>
+                <div class="price" id="price-22k">Loading...</div>
+                <div class="change" id="change-22k">--</div>
+            </div>
+
+            <!-- Silver -->
+            <div class="rate-card">
+                <div class="metal-name">Silver (999)</div>
+                <div class="price" id="price-silver">Loading...</div>
+                <div class="change" id="change-silver">--</div>
+            </div>
+        </div>
+
+        <div class="update-time">
+            Last Updated: <span id="last-updated">Fetching...</span>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact">
+        <h2>Interested in buying or selling?</h2>
+        <p>Contact Mohit Bullion for the best deals.</p>
+        <br>
+        <button>Call Now: +91 98765 43210</button>
+    </section>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // --- CONFIGURATION ---
+        
+        // Since real financial APIs cost money, we are running a SIMULATOR by default.
+        // To use REAL data, you would need an API key from services like GoldAPI.io or MetalPriceAPI.
+        
+        // Base simulation prices (Approx India rates)
+        let basePrice24k = 73500;
+        let basePrice22k = 67400;
+        let basePriceSilver = 87500;
+
+        function updateRates() {
+            // 1. SIMULATOR LOGIC (For Demo Purposes)
+            // Randomly fluctuate prices by small amounts to look "Live"
+            const randomFluctuation = (Math.random() - 0.5) * 50; 
+            
+            let current24k = basePrice24k + randomFluctuation;
+            let current22k = basePrice22k + (randomFluctuation * 0.9); // 22k is cheaper
+            let currentSilver = basePriceSilver + (randomFluctuation * 10);
+
+            // 2. UPDATE DOM
+            document.getElementById('price-24k').innerText = "₹" + Math.round(current24k).toLocaleString();
+            document.getElementById('price-22k').innerText = "₹" + Math.round(current22k).toLocaleString();
+            document.getElementById('price-silver').innerText = "₹" + Math.round(currentSilver).toLocaleString();
+
+            // Update Time
+            const now = new Date();
+            document.getElementById('last-updated').innerText = now.toLocaleTimeString();
+
+            // Determine Up/Down color (Random for simulator)
+            updateArrows();
+        }
+
+        function updateArrows() {
+            // Just random visual logic for the demo
+            const metals = ['24k', '22k', 'silver'];
+            metals.forEach(metal => {
+                const el = document.getElementById(`change-${metal}`);
+                const isUp = Math.random() > 0.5;
+                el.innerHTML = isUp ? '▲ 0.5%' : '▼ 0.3%';
+                el.className = isUp ? 'change up' : 'change down';
+            });
+        }
+
+        // Run immediately
+        updateRates();
+
+        // Run every 5 seconds to simulate live feed
+        setInterval(updateRates, 5000);
+
+        /* 
+        --- HOW TO CONNECT TO REAL DATA ---
+        
+        1. Get a free API key from https://www.goldapi.io/ (or similar).
+        2. Replace the 'updateRates' function above with this code:
+        
+        const apiKey = 'YOUR_API_KEY';
+        
+        async function getRealRates() {
+            try {
+                // Fetch Gold 24K
+                const response24k = await fetch('https://www.goldapi.io/api/XAU/INR', {
+                    headers: {'x-access-token': apiKey}
+                });
+                const data24k = await response24k.json();
+                
+                // Update DOM with real data
+                document.getElementById('price-24k').innerText = "₹" + Math.round(data24k.price).toLocaleString();
+                document.getElementById('last-updated').innerText = new Date().toLocaleTimeString();
+                
+                // You would do similar calls for Silver and calculate 22k based on 24k * 0.916
+            } catch (error) {
+                console.error('Error fetching rates:', error);
+            }
+        }
+        */
+    </script>
+</body>
+</html>
